@@ -1,5 +1,6 @@
 <script setup>
 import axios from "axios";
+import Card from "./Card.vue";
 
 // there is no pagination in this api, to see go to leson number 73
 const response = await axios.get(
@@ -8,11 +9,25 @@ const response = await axios.get(
 const characters = response.data;
 console.log(characters);
 </script>
+
 <template>
   <div class="container">
-    <div class="cards"></div>
+    <div class="cards">
+      <Card
+        v-for="character in characters"
+        :key="character.id"
+        :image="character.imageUrl"
+        :firstName="character.firstName"
+        :family="character.family"
+      >
+        <div>
+          <p>{{ character.title }}</p>
+        </div>
+      </Card>
+    </div>
   </div>
 </template>
+
 <style scoped>
 .container {
   background-color: rgb(27, 26, 26);
@@ -24,7 +39,6 @@ console.log(characters);
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  height: 700px;
 }
 
 .cards h3 {
